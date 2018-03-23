@@ -2,6 +2,8 @@ package ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
+import java.lang.reflect.Field;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -253,4 +255,32 @@ public class TestMySimpleArrayList {
 		}
 	}
 	//End Region
+	
+	@Test
+    public void strayObectReference() {
+        // initially we have 2 items in the list
+        Assert.assertEquals(2, simpleArrayList.size());
+        
+        // we remove the items
+        simpleArrayList.remove(0);
+        simpleArrayList.remove(0);
+        Assert.assertEquals(0, simpleArrayList.size());
+        
+        // now we check what we propagate and what's really in there
+        try {
+            // get access to the inner array
+            Field myArray = simpleArrayList.getClass().getDeclaredField("myArray");
+            myArray.setAccessible(true);
+            String[] innerArray = (String[]) myArray.get(simpleArrayList);
+            
+            // Assumption is that the inner list is empty
+            for(String s : innerArray)
+            {
+                Assert.assertNull("Found stray object reference", s);
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 }

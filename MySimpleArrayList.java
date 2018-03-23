@@ -85,8 +85,13 @@ public class MySimpleArrayList implements IMySimpleArrayList {
 		for (int i = index; i < _logical_size - 1; i++) {
 			myArray[i] = myArray[i + 1];
 		}
-
+		
+		if (_logical_size > 0){
+			myArray[_logical_size-1] = null;
+		}
+		
 		_logical_size--;
+	
 		ResizeArray();
 		return deletedValue;
 	}
