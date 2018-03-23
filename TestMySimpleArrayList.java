@@ -100,12 +100,10 @@ public class TestMySimpleArrayList {
 	//Region Insert Tests
 	@Test
 	public void insert_Beginning() {
-		simpleArrayList.insert(0, "Zero");
+		String insertOutput = simpleArrayList.insert(0, "Zero");
+		
+		assertEquals("Zero", insertOutput);
 		assertEquals(3, simpleArrayList.size());
-
-		for (int i = 0; i < simpleArrayList.size(); i++) {
-			System.out.println(simpleArrayList.get(i));
-		}
 		assertEquals("Zero", simpleArrayList.get(0));
 		assertEquals("One", simpleArrayList.get(1));
 		assertEquals("Two", simpleArrayList.get(2));
@@ -113,8 +111,9 @@ public class TestMySimpleArrayList {
 
 	@Test
 	public void insert_End() {
-		simpleArrayList.insert(2, "Three");
-
+		String insertOutput = simpleArrayList.insert(2, "Three");
+		
+		assertEquals("Three", insertOutput);
 		assertEquals(3, simpleArrayList.size());
 		assertEquals("One", simpleArrayList.get(0));
 		assertEquals("Two", simpleArrayList.get(1));
@@ -123,8 +122,9 @@ public class TestMySimpleArrayList {
 
 	@Test
 	public void insert_Middle() {
-		simpleArrayList.insert(1, "OnePointFive");
-
+		String insertOutput = simpleArrayList.insert(1, "OnePointFive");
+		
+		assertEquals("OnePointFive", insertOutput);
 		assertEquals(3, simpleArrayList.size());
 		assertEquals("One", simpleArrayList.get(0));
 		assertEquals("OnePointFive", simpleArrayList.get(1));
@@ -134,10 +134,15 @@ public class TestMySimpleArrayList {
 
 	@Test
 	public void insert_Middle_ForceResize() {
-		simpleArrayList.insert(1, "OnePointSevenFive");
-		simpleArrayList.insert(1, "OnePointFive");
-		simpleArrayList.insert(1, "OnePointTwoFive");
-
+		String insertOutput = simpleArrayList.insert(1, "OnePointSevenFive");
+		assertEquals("OnePointSevenFive", insertOutput);
+		
+		insertOutput = simpleArrayList.insert(1, "OnePointFive");
+		assertEquals("OnePointFive", insertOutput);
+		
+		insertOutput = simpleArrayList.insert(1, "OnePointTwoFive");
+		assertEquals("OnePointTwoFive", insertOutput);
+		
 		assertEquals(5, simpleArrayList.size());
 		assertEquals("One", simpleArrayList.get(0));
 		assertEquals("OnePointFive", simpleArrayList.get(2));
@@ -146,7 +151,6 @@ public class TestMySimpleArrayList {
 
 	@Test
 	public void insert_NegativeIndex_ThrowsIndexOutOfBoundsException() {
-
 		try {
 			String temp = simpleArrayList.insert(-1, "NegativeIndex");
 			Assert.fail("Fail! Method was expected to throw an exception because negative numbers are not supported.");
@@ -169,14 +173,18 @@ public class TestMySimpleArrayList {
 	//Region Remove Tests
 	@Test
 	public void remove_Beginning() {
-		simpleArrayList.remove(0);
+		String removeOutput = simpleArrayList.remove(0);
+		
+		assertEquals("One", removeOutput);
 		assertEquals(1, simpleArrayList.size());
 		assertEquals("Two", simpleArrayList.get(0));
 	}
 
 	@Test
 	public void remove_End() {
-		simpleArrayList.remove(1);
+		String removeOutput = simpleArrayList.remove(1);
+		
+		assertEquals("Two", removeOutput);
 		assertEquals(1, simpleArrayList.size());
 		assertEquals("One", simpleArrayList.get(0));
 	}
@@ -186,7 +194,8 @@ public class TestMySimpleArrayList {
 		simpleArrayList.insert(1, "OnePointFive");
 		assertEquals(3, simpleArrayList.size());
 
-		simpleArrayList.remove(1);
+		String removeOutput = simpleArrayList.remove(1);
+		assertEquals("OnePointFive", removeOutput);
 
 		assertEquals(2, simpleArrayList.size());
 		assertEquals("One", simpleArrayList.get(0));
@@ -202,9 +211,15 @@ public class TestMySimpleArrayList {
 
 		assertEquals(5, simpleArrayList.size());
 
-		simpleArrayList.remove(1);
-		simpleArrayList.remove(1);
-		simpleArrayList.remove(1);
+		String removeOutput = simpleArrayList.remove(1);
+		assertEquals("OnePointTwoFive", removeOutput);
+		
+		removeOutput = simpleArrayList.remove(1);
+		assertEquals("OnePointFive", removeOutput);
+		
+		removeOutput = simpleArrayList.remove(1);
+		assertEquals("OnePointSevenFive", removeOutput);
+		
 		assertEquals(2, simpleArrayList.size());
 	}
 
@@ -237,6 +252,5 @@ public class TestMySimpleArrayList {
 			assertEquals("Argument was out of Bounds", e.getMessage());
 		}
 	}
-	
 	//End Region
 }
